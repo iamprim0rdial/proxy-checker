@@ -1,19 +1,25 @@
 import requests
-
-# Two List to append working ip's or not working ip's
+"""
+AUTHOR: VISHAL 
+INPUT : TXT FILE CONTAINING PROXY LIST
+OUTPUT : {
+            WORKING PROXY LIST 
+            NON WORKING PROXY LIST
+        }
+"""
 working = []
 not_working = []
 
 try:
-    with open('proxies.txt', 'r') as file:
+    with open('YOUR_PROXY_TXT_FILE', 'r') as file:
         for ip in file.readlines():
             proxy = {
                 'http': ip.strip(),
                 'https': ip.strip()
             }
             try:
-                res = requests.get('https://httpbin.org/ip', proxies=proxy, timeout=5)
-                if res.status_code == 200:
+                response = requests.get('https://httpbin.org/ip', proxies=proxy, timeout=5)
+                if response.status_code == 200:
                     working.append(ip.strip())
                 else:
                     not_working.append(ip.strip())
